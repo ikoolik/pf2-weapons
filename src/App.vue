@@ -113,6 +113,7 @@
             <option value="Fatal">Fatal</option>
             <option value="Reach">Reach</option>
             <option value="Forceful">Forceful</option>
+            <option value="Repeating">Repeating</option>
           </select>
         </div>
       </div>
