@@ -18,11 +18,18 @@
 
       <hr>
         <label class="me-2">
+          Expensive (13gp+)
+          <select class="form-select block" v-model="adjustements.price">
+            <option :value="0">Nope</option>
+            <option :value="1">Yup</option>
+          </select>
+        </label>
+        <label class="me-2">
           Weapon Category
           <select class="form-select block" v-model="adjustements.category">
             <option :value="0">Simple</option>
-            <option :value="3">Martial (+3)</option>
-            <option :value="5">Advanced (+5)</option>
+            <option :value="3">Martial</option>
+            <option :value="5">Advanced</option>
           </select>
         </label>
         <label class="me-2">
@@ -51,6 +58,17 @@
             <option :value="6">Reload 2</option>
           </select>
         </label>
+      <label v-if="!isMelee" class="me-2">
+        Range
+        <select class="form-select" v-model="adjustements.range">
+          <option :value="4">20ft</option>
+          <option :value="3">30ft</option>
+          <option :value="1">50ft</option>
+          <option :value="0">60ft</option>
+          <option :value="-2">100ft</option>
+          <option :value="-3">120ft</option>
+        </select>
+      </label>
         <label v-if="!isMelee" class="me-2">
           Volley
           <select class="form-select" v-model="adjustements.volley">
@@ -113,7 +131,9 @@ export default {
       die: 0,
       hands: 0,
       reload: 0,
-      volley: 0
+      volley: 0,
+      price: 0,
+      range: 0,
     },
     boons: {
       minor: [],
@@ -126,9 +146,9 @@ export default {
       return this.range === 'melee';
     },
     total () {
-      let value = 1 + this.adjustements.category + this.adjustements.die + this.adjustements.hands
+      let value = 1 + this.adjustements.category + this.adjustements.die + this.adjustements.hands + this.adjustements.price
       if(!this.isMelee) {
-        value =  value - 3 + this.adjustements.reload + this.adjustements.volley
+        value =  value - 3 + this.adjustements.reload + this.adjustements.volley + this.adjustements.range
       }
       value = value - this.boons.minor.length - this.boons.greater.length * 2 - this.boons.major.length * 3
       return value
