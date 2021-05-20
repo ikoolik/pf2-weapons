@@ -152,6 +152,13 @@ export default {
       major: [],
     },
   }),
+  created () {
+    window.ym(79182352, "init", {
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true
+    });
+  },
   computed: {
     hasFinesse () {
       return this.boons.minor.indexOf('Finesse') > -1
