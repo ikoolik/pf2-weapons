@@ -1,82 +1,104 @@
 <template>
-  <div id="app">
-    <h1>Total: {{ total }}</h1>
+  <div id="app" class="container">
+    <form>
+      <h1>Points Left: {{ total }}</h1>
 
-    <label>
-      Range:
-      <select v-model="range">
-        <option value="melee">Melee</option>
-        <option value="ranged">Ranged</option>
-      </select>
-    </label>
+      <div class="form-check">
+        <input v-model="range" class="form-check-input" type="radio" id="range-melee" value="melee">
+        <label class="form-check-label" for="range-melee">
+          Melee
+        </label>
+      </div>
+      <div class="form-check">
+        <input v-model="range" class="form-check-input" type="radio" id="range-ranged" value="ranged">
+        <label class="form-check-label" for="range-ranged">
+          Ranged
+        </label>
+      </div>
 
-    <hr>
-    <label>
-      <select v-model="adjustements.category">
-        <option :value="0">Simple</option>
-        <option :value="3">Martial</option>
-        <option :value="5">Simple</option>
-      </select>
-    </label>
-    <label>
-      <select v-model="adjustements.hands">
-        <option :value="0">One Handed</option>
-        <option :value="6">Two Handed</option>
-      </select>
-    </label>
-    <label>
-      <select v-model="adjustements.die">
-        <option :value="3">d4</option>
-        <option :value="0">d6</option>
-        <option :value="-3">d8</option>
-        <option :value="-6">d10</option>
-        <option :value="-9">d12</option>
-      </select>
-    </label>
-    <label v-if="!isMelee">
-      <select v-model="adjustements.reload">
-        <option :value="0">Reload 0</option>
-        <option :value="3">Reload 1</option>
-        <option :value="6">Reload 2</option>
-      </select>
-    </label>
-    <label v-if="!isMelee">
-      <select v-model="adjustements.volley">
-        <option :value="0">No Volley</option>
-        <option :value="3">Volley 30ft</option>
-      </select>
-    </label>
-
-    <hr>
-    <select v-model="boons.minor" multiple style="height:250px">
-      <option value="Backstabber">Backstabber</option>
-      <option value="Backswing">Backswing</option>
-      <option value="Disarm ">Disarm </option>
-      <option value="Finesse">Finesse</option>
-      <option value="Versatile">Versatile</option>
-      <option value="Free hand">Free hand</option>
-      <option value="Propulsive ">Propulsive </option>
-      <option value="Shove">Shove</option>
-      <option value="Sweep">Sweep</option>
-      <option value="Thrown">Thrown</option>
-      <option value="Twin">Twin</option>
-      <option value="Two handed">Two handed</option>
-    </select>
-    <select v-model="boons.greater" multiple style="height:250px">
-      <option value="Agile">Agile</option>
-      <option value="Deadly">Deadly</option>
-      <option value="Grapple">Grapple</option>
-      <option value="Jousting">Jousting</option>
-      <option value="Parry">Parry</option>
-      <option value="Range">Range</option>
-      <option value="Trip">Trip</option>
-      <option value="Forceful">Forceful</option>
-    </select>
-    <select v-model="boons.major" multiple style="height:250px">
-      <option value="Attached">Attached</option>
-      <option value="Fatal">Fatal</option>
-      <option value="Reach">Reach</option>
-    </select>
+      <hr>
+        <label class="me-2">
+          Weapon Category
+          <select class="form-select block" v-model="adjustements.category">
+            <option :value="0">Simple</option>
+            <option :value="3">Martial (+3)</option>
+            <option :value="5">Advanced (+5)</option>
+          </select>
+        </label>
+        <label class="me-2">
+          Hands
+          <select class="form-select block" v-model="adjustements.hands">
+            <option :value="0">1</option>
+            <option v-if="!isMelee" :value="1">1+</option>
+            <option :value="6">2</option>
+          </select>
+        </label>
+        <label class="me-2">
+          Damage
+          <select class="form-select" v-model="adjustements.die">
+            <option :value="3">d4</option>
+            <option :value="0">d6</option>
+            <option :value="-3">d8</option>
+            <option :value="-6">d10</option>
+            <option :value="-9">d12</option>
+          </select>
+        </label>
+        <label v-if="!isMelee" class="me-2">
+          Reload
+          <select class="form-select" v-model="adjustements.reload">
+            <option :value="0">Reload 0</option>
+            <option :value="3">Reload 1</option>
+            <option :value="6">Reload 2</option>
+          </select>
+        </label>
+        <label v-if="!isMelee" class="me-2">
+          Volley
+          <select class="form-select" v-model="adjustements.volley">
+            <option :value="0">No Volley</option>
+            <option :value="3">Volley 30ft</option>
+          </select>
+        </label>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Minor Boons (1 point each)
+          <select class="form-select" v-model="boons.minor" multiple>
+            <option value="Backstabber">Backstabber</option>
+            <option value="Backswing">Backswing</option>
+            <option value="Disarm ">Disarm </option>
+            <option value="Finesse">Finesse</option>
+            <option value="Versatile">Versatile</option>
+            <option value="Free hand">Free hand</option>
+            <option value="Propulsive ">Propulsive </option>
+            <option value="Shove">Shove</option>
+            <option value="Sweep">Sweep</option>
+            <option value="Thrown">Thrown</option>
+            <option value="Twin">Twin</option>
+            <option value="Two handed">Two handed</option>
+          </select>
+        </div>
+        <div class="col">
+          Greater Boons (2 points each)
+          <select class="form-select" v-model="boons.greater" multiple>
+            <option value="Agile">Agile</option>
+            <option value="Deadly">Deadly</option>
+            <option value="Grapple">Grapple</option>
+            <option value="Jousting">Jousting</option>
+            <option value="Parry">Parry</option>
+            <option value="Trip">Trip</option>
+          </select>
+        </div>
+        <div class="col">
+          Major Boons (3 points each)
+          <select class="form-select" v-model="boons.major" multiple>
+            <option value="Attached">Attached</option>
+            <option value="Fatal">Fatal</option>
+            <option value="Reach">Reach</option>
+            <option value="Forceful">Forceful</option>
+          </select>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -106,7 +128,7 @@ export default {
     total () {
       let value = 1 + this.adjustements.category + this.adjustements.die + this.adjustements.hands
       if(!this.isMelee) {
-        value =  value + this.adjustements.reload - 2 + this.adjustements.volley
+        value =  value - 3 + this.adjustements.reload + this.adjustements.volley
       }
       value = value - this.boons.minor.length - this.boons.greater.length * 2 - this.boons.major.length * 3
       return value
@@ -115,14 +137,3 @@ export default {
   name: 'App',
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
