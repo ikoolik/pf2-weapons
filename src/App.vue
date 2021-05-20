@@ -117,6 +117,11 @@
         </div>
       </div>
     </form>
+    <hr />
+    <div v-if="hasFinesse" class="border rounded container pt-3">
+      <h4>Finesse</h4>
+      <p>There are currently no published weapons with Finesse trait.</p>
+    </div>
   </div>
 </template>
 
@@ -142,6 +147,9 @@ export default {
     },
   }),
   computed: {
+    hasFinesse () {
+      return this.boons.minor.indexOf('Finesse') > -1
+    },
     isMelee () {
       return this.range === 'melee';
     },
