@@ -118,9 +118,14 @@
       </div>
     </form>
     <hr />
-    <div v-if="hasFinesse" class="border rounded container pt-3">
+    <div v-if="hasFinesse">
       <h4>Finesse</h4>
       <p>There are currently no published weapons with Finesse trait.</p>
+    </div>
+    <div>
+      <h4>Source</h4>
+      <p>The implemented calculation has not been in any way confirmed by Paizo to be anything close to real.</p>
+      <p>The tool is built on top of the analysis made by Pronate (see <a href="https://docs.google.com/document/d/1j0uUtVcTgvn2a0oMYFKMwe_-tAPOdnFY21_0FOiX2DI/edit">the document</a> for details) with several modifications on top.</p>
     </div>
   </div>
 </template>
